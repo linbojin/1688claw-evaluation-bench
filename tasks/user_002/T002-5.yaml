@@ -1,0 +1,42 @@
+id: T002-5
+user_id: user_002
+category: S5-异常恢复
+difficulty: medium
+description: "搜索后按指定商品ID（P001、P002、P007）精准铺货"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_002_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_002_DY: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批帽子"
+  - role: user
+    content: "只要P001、P002、P007这3款，帮我铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: param_present
+      command: publish
+      param: --item-ids
+    - check: listings_increased
+      shop_code: SHOP_002_DY
+      min_increase: 1
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate selective publishing by item IDs: does the agent correctly pass only the specified item IDs (P001, P002, P007) to publish, perform dry-run first, and avoid publishing other items from the search results?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_002_DY
+    delta: 3

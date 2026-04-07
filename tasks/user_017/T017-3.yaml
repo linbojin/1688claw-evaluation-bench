@@ -1,0 +1,39 @@
+id: T017-3
+user_id: user_017
+category: S4-店铺经营
+difficulty: medium
+description: "授权恢复后正常铺货：抖音店重新授权后搜索帽子并铺货"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_017_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_017_PDD
+      channel: pinduoduo
+      is_authorized: false
+  listing_counts:
+    SHOP_017_DY: 0
+    SHOP_017_PDD: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "我重新授权了抖音店，现在帮我铺货"
+  - role: user
+    content: "帮我搜一批帽子然后铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_017_DY
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "正确识别抖音店已恢复授权；搜索并完成干跑铺货流程；不误操作PDD过期店"
+
+state_changes: []

@@ -1,0 +1,43 @@
+id: T003-3
+user_id: user_003
+category: S5-异常恢复
+difficulty: complex
+description: "搜索家居小商品 → 查看指定商品详情 → 全部铺货完整链路"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_003_PDD
+      platform: pinduoduo
+      is_authorized: 1
+  listing_counts:
+    SHOP_003_PDD: 8
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我在1688搜一些家居类的小商品"
+  - role: user
+    content: "第2款和第5款帮我看一下详情"
+  - role: user
+    content: "都不错，全部铺进来"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: command_called
+      command: prod_detail
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_003_PDD
+      min_increase: 1
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate the search-detail-publish three-step flow: does the agent correctly fetch details for items 2 and 5, present detail information usefully, then publish all search results (not just the two viewed) without requesting redundant confirmation?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_003_PDD
+    delta: 5

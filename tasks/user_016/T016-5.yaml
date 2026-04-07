@@ -1,0 +1,31 @@
+id: T016-5
+user_id: user_016
+category: S4-店铺经营
+difficulty: basic
+description: "正常日报：AK配置正常后生成店铺日报"
+
+world_state:
+  ak_configured: true
+  ak_status: configured
+  shops:
+    - shop_code: SHOP_016_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_016_DY: 40
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报正常生成，内容反映40品15单/天的店铺状态；格式清晰"
+
+state_changes: []

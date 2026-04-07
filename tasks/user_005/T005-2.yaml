@@ -1,0 +1,39 @@
+id: T005-2
+user_id: user_005
+category: S5-异常恢复
+difficulty: complex
+description: "授权恢复后搜大码女装并铺到抖音店"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_005_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_005_DY: 12
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "授权好了，帮我搜一批大码女装"
+  - role: user
+    content: "帮我铺到我的抖音店"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_005_DY
+      min_increase: 1
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate post-renewal publish flow: after auth is restored, does the agent smoothly execute search → dry-run → publish without re-raising the authorization issue, and does it correctly identify the single shop without asking for disambiguation?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_005_DY
+    delta: 5

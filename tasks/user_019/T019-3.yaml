@@ -1,0 +1,38 @@
+id: T019-3
+user_id: user_019
+category: S4-店铺经营
+difficulty: complex
+description: "精选铺货：从60个预置商品中筛选最优10款使用--item-ids铺入"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_019_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_019_DY: 20
+  pre_seeded_snapshots:
+    - data_id: "20240101_100000_019"
+      item_count: 60
+
+turns:
+  - role: user
+    content: "从那60个商品里，帮我挑出最好的10个铺"
+
+grading:
+  automated:
+    - check: dry_run_before_publish
+    - check: command_called
+      command: publish
+    - check: param_present
+      command: publish
+      param: --item-ids
+    - check: listings_increased
+      shop_code: SHOP_019_DY
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "有明确的筛选依据或分析过程；使用--item-ids精确指定选出的10个商品；干跑后执行铺货"
+
+state_changes: []

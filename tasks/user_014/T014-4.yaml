@@ -1,0 +1,30 @@
+id: T014-4
+user_id: user_014
+category: S4-店铺经营
+difficulty: basic
+description: "淡季转型准备：询问大码女装淡季时是否应换类目及换类目建议"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_014_PDD
+      channel: pinduoduo
+      is_authorized: true
+  listing_counts:
+    SHOP_014_PDD: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "旺季快结束了，大码女装会进入淡季，我应该准备换类目吗？有什么建议？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: faq
+    description: "给出淡季应对策略（保持/减量/换类目的利弊分析），提供备选类目方向，内容实用，不触发铺货操作"
+
+state_changes: []

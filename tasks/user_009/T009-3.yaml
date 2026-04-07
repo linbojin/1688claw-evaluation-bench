@@ -1,0 +1,30 @@
+id: T009-3
+user_id: user_009
+category: S5-异常恢复
+difficulty: basic
+description: "小红书家居商品标题合规规范及敏感词FAQ"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_009_XHS
+      platform: xiaohongshu
+      is_authorized: 1
+  listing_counts:
+    SHOP_009_XHS: 25
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "小红书上卖家居，商品标题怎么写才不会被审核？有什么敏感词要避开？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: search
+  llm_judge:
+    task_type: faq
+    description: "Evaluate the Xiaohongshu listing compliance FAQ: does the agent provide accurate and specific guidance on title writing best practices, list concrete sensitive/prohibited terms to avoid for home goods, and explain the platform's content review logic?"
+
+state_changes: []

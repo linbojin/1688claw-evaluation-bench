@@ -1,0 +1,62 @@
+id: T010-2
+user_id: user_010
+category: S5-异常恢复
+difficulty: complex
+description: "全平台同步铺货：搜运动健身产品后依次铺到抖音、拼多多、淘宝"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_010_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_010_PDD
+      platform: pinduoduo
+      is_authorized: 1
+    - shop_code: SHOP_010_TB
+      platform: taobao
+      is_authorized: 1
+  listing_counts:
+    SHOP_010_DY: 25
+    SHOP_010_PDD: 25
+    SHOP_010_TB: 25
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批运动健身产品"
+  - role: user
+    content: "铺到抖音"
+  - role: user
+    content: "再铺到拼多多"
+  - role: user
+    content: "再铺到淘宝"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_010_DY
+      min_increase: 1
+    - check: listings_increased
+      shop_code: SHOP_010_PDD
+      min_increase: 1
+    - check: listings_increased
+      shop_code: SHOP_010_TB
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate three-platform sequential publish: does the agent correctly execute publish to all three platforms in sequence, maintain the same product set across all three operations, perform dry-run before each publish, and handle each routing instruction correctly?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_010_DY
+    delta: 5
+  - type: listings_increased
+    shop_code: SHOP_010_PDD
+    delta: 5
+  - type: listings_increased
+    shop_code: SHOP_010_TB
+    delta: 5

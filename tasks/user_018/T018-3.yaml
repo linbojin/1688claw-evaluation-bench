@@ -1,0 +1,27 @@
+id: T018-3
+user_id: user_018
+category: S4-店铺经营
+difficulty: basic
+description: "日报无店铺处理：无绑定店铺情况下优雅处理日报请求并给出开店指引"
+
+world_state:
+  ak_configured: true
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+    - check: store_guidance
+  llm_judge:
+    task_type: error_recovery
+    description: "调用shop_daily后优雅处理无店铺情况；给出绑定店铺的指引；不崩溃或输出原始错误"
+
+state_changes: []

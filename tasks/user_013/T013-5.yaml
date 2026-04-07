@@ -1,0 +1,45 @@
+id: T013-5
+user_id: user_013
+category: S4-店铺经营
+difficulty: complex
+description: "周期性复盘选品计划：全面日报后制定下周选品计划，依次搜索帽子和家居"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_013_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_013_PDD
+      channel: pinduoduo
+      is_authorized: true
+    - shop_code: SHOP_013_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_013_DY: 50
+    SHOP_013_PDD: 50
+    SHOP_013_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "给我出个全面的经营日报"
+  - role: user
+    content: "根据日报，帮我制定下周的选品计划，先搜帽子"
+  - role: user
+    content: "再搜一下家居"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: command_called
+      command: search
+    - check: snapshot_created
+    - check: markdown_outputted
+  llm_judge:
+    task_type: multi_step
+    description: "日报覆盖三店；选品计划有逻辑性且与日报结论相关；帽子和家居均完成搜索并生成快照"
+
+state_changes: []

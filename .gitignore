@@ -1,0 +1,4 @@
+db/benchmark.db
+results/
+__pycache__/
+*.pyc

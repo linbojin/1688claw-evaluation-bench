@@ -1,0 +1,31 @@
+id: T016-1
+user_id: user_016
+category: S4-店铺经营
+difficulty: medium
+description: "偶发401错误处理：搜索时AK返回401，Agent应给出AK更新指引"
+
+world_state:
+  ak_configured: true
+  ak_status: expiring
+  force_401: true
+  shops:
+    - shop_code: SHOP_016_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_016_DY: 40
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批帽子"
+
+grading:
+  automated:
+    - check: ak_guidance
+    - check: markdown_outputted
+  llm_judge:
+    task_type: error_recovery
+    description: "识别401错误为AK过期；给出清晰的重新获取AK步骤；措辞友好不令用户困惑；不继续尝试搜索"
+
+state_changes: []

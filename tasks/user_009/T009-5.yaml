@@ -1,0 +1,31 @@
+id: T009-5
+user_id: user_009
+category: S5-异常恢复
+difficulty: medium
+description: "铺货后效果追踪：30个商品日报验证新增厨房商品出单情况"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_009_XHS
+      platform: xiaohongshu
+      is_authorized: 1
+  listing_counts:
+    SHOP_009_XHS: 30
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，看看新铺的厨房商品有没有出单"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: daily_reflects_listings
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "Evaluate new category tracking in daily report: does the agent correctly report 30 listings (25 home + 5 kitchen), attempt to distinguish new kitchen items' performance from existing home goods where possible, and set realistic expectations for new listings?"
+
+state_changes: []

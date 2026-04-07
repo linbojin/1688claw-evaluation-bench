@@ -1,0 +1,30 @@
+id: T014-2
+user_id: user_014
+category: S4-店铺经营
+difficulty: medium
+description: "旺季日报分析：旺季高出单量下分析最畅销商品"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_014_PDD
+      channel: pinduoduo
+      is_authorized: true
+  listing_counts:
+    SHOP_014_PDD: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "给我出个日报，旺季出单这么多，帮我分析哪款卖得最好"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报准确反映旺季高出单量（约80单/天）；对畅销商品有排名或重点标注；分析有实质内容"
+
+state_changes: []

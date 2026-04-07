@@ -1,0 +1,32 @@
+id: T015-1
+user_id: user_015
+category: S4-店铺经营
+difficulty: medium
+description: "精品选品标准：生成日报后讨论高品质家居产品的选品标准"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_015_XHS
+      channel: xiaohongshu
+      is_authorized: true
+  listing_counts:
+    SHOP_015_XHS: 20
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "给我出个日报"
+  - role: user
+    content: "我想选更多高品质的家居产品，有什么选品标准？"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报反映精品高客单价店铺特征；第二轮给出小红书精品家居的选品维度（材质/设计感/拍摄/供应商资质等）"
+
+state_changes: []

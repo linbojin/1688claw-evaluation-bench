@@ -1,0 +1,35 @@
+id: T008-4
+user_id: user_008
+category: S5-异常恢复
+difficulty: medium
+description: "商机热榜发现家居新方向，搜索并对比帽子选品逻辑的差异"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_008_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_008_DY: 35
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看商机热榜，想看看有没有新机会"
+  - role: user
+    content: "热榜上家居不错，帮我搜一批，看看和我现在帽子的选品逻辑有什么不同"
+
+grading:
+  automated:
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: search
+    - check: markdown_outputted
+    - check: no_raw_json
+  llm_judge:
+    task_type: product_selection
+    description: "Evaluate cross-category opportunity analysis: does the agent meaningfully compare the product selection logic for home goods vs hats (different margin structures, traffic sources, content requirements on Douyin), helping the user understand the category transition implications?"
+
+state_changes: []

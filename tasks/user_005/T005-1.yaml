@@ -1,0 +1,31 @@
+id: T005-1
+user_id: user_005
+category: S5-异常恢复
+difficulty: medium
+description: "抖音授权过期时尝试铺货，系统检测到过期并提供续授权引导"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_005_DY
+      platform: douyin
+      is_authorized: 0
+  listing_counts:
+    SHOP_005_DY: 12
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我铺一批新品进来"
+
+grading:
+  automated:
+    - check: auth_renewal_guidance
+    - check: markdown_outputted
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: error_recovery
+    description: "Evaluate authorization expiry handling: does the agent detect the expired auth, provide clear and actionable renewal guidance (with steps), and correctly refrain from attempting to publish to an unauthorized shop?"
+
+state_changes: []

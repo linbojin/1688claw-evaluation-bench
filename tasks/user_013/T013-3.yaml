@@ -1,0 +1,44 @@
+id: T013-3
+user_id: user_013
+category: S4-店铺经营
+difficulty: medium
+description: "平台换品策略：评估将抖音滞销品换至拼多多测试，并搜索新品铺入拼多多"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_013_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_013_PDD
+      channel: pinduoduo
+      is_authorized: true
+    - shop_code: SHOP_013_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_013_DY: 50
+    SHOP_013_PDD: 50
+    SHOP_013_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "某款商品在抖音一直滞销，要不要换到拼多多试试？"
+  - role: user
+    content: "帮我在拼多多铺一批新品"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_013_PDD
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "第一轮对换平台策略给出有依据的分析；第二轮搜索并完成铺入拼多多的干跑流程"
+
+state_changes: []

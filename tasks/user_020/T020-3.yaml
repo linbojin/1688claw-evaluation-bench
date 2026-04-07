@@ -1,0 +1,34 @@
+id: T020-3
+user_id: user_020
+category: S4-店铺经营
+difficulty: medium
+description: "双店对比日报：同时生成抖音和拼多多日报，反映PDD授权过期的影响"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_020_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_020_PDD
+      channel: pinduoduo
+      is_authorized: false
+  listing_counts:
+    SHOP_020_DY: 20
+    SHOP_020_PDD: 20
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，两个店都要看"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报涵盖两个店铺；DY出单数据正常展示；PDD授权过期情况在报告中有说明；整体格式清晰"
+
+state_changes: []

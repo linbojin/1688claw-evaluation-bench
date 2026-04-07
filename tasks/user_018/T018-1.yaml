@@ -1,0 +1,32 @@
+id: T018-1
+user_id: user_018
+category: S4-店铺经营
+difficulty: medium
+description: "搜索成功但铺货受阻：有AK无绑定店铺，搜索正常但铺货时发现无可用店铺"
+
+world_state:
+  ak_configured: true
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批帽子"
+  - role: user
+    content: "帮我铺到我的店里"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: command_called
+      command: shops
+    - check: store_guidance
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: error_recovery
+    description: "搜索正常执行；铺货前调用shops发现无绑定店铺；给出绑定/开通店铺的指引；不执行publish"
+
+state_changes: []

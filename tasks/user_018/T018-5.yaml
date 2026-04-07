@@ -1,0 +1,31 @@
+id: T018-5
+user_id: user_018
+category: S4-店铺经营
+difficulty: medium
+description: "提前备货选品：未开店时依次搜索帽子和家居，为未来铺货做选品储备"
+
+world_state:
+  ak_configured: true
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "虽然还没开店，帮我先选好几个类目，研究一下"
+  - role: user
+    content: "帮我搜帽子"
+  - role: user
+    content: "帮我搜家居"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: snapshot_created
+    - check: markdown_outputted
+  llm_judge:
+    task_type: product_selection
+    description: "帽子和家居均完成搜索；快照保存；输出对两个类目的选品分析或对比；整体呈现适合开店前研究的专业视角"
+
+state_changes: []

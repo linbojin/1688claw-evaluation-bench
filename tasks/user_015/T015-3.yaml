@@ -1,0 +1,39 @@
+id: T015-3
+user_id: user_015
+category: S4-店铺经营
+difficulty: complex
+description: "精品限量铺货：搜索高品质家居，仅选最好的3款铺入小红书"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_015_XHS
+      channel: xiaohongshu
+      is_authorized: true
+  listing_counts:
+    SHOP_015_XHS: 20
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批高品质的家居产品"
+  - role: user
+    content: "只要最好的3款，帮我铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_015_XHS
+      min_increase: 1
+    - check: param_present
+      command: publish
+      param: --item-ids
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "搜索结果有质量筛选；铺货使用--item-ids精确指定3款；干跑后正式铺货；目标店铺唯一不额外询问"
+
+state_changes: []

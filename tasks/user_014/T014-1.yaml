@@ -1,0 +1,42 @@
+id: T014-1
+user_id: user_014
+category: S4-店铺经营
+difficulty: complex
+description: "旺季前备货：双11前在拼多多渠道搜索大码女装并批量铺货"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_014_PDD
+      channel: pinduoduo
+      is_authorized: true
+  listing_counts:
+    SHOP_014_PDD: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "双11快到了，我想多铺一批大码女装备货"
+  - role: user
+    content: "帮我在拼多多渠道搜一批大码女装"
+  - role: user
+    content: "帮我铺进去"
+
+grading:
+  automated:
+    - check: param_present
+      command: search
+      param: --channel
+      value: pinduoduo
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_014_PDD
+      min_increase: 5
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "搜索指定拼多多渠道；大码女装关键词正确；干跑后正式铺货；目标店铺唯一不额外询问"
+
+state_changes: []

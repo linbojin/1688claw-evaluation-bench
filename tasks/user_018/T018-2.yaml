@@ -1,0 +1,34 @@
+id: T018-2
+user_id: user_018
+category: S4-店铺经营
+difficulty: medium
+description: "纯选品研究：无店铺状态下查看商机热榜、帽子趋势、搜索帽子做市场研究"
+
+world_state:
+  ak_configured: true
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看商机热榜"
+  - role: user
+    content: "帮我分析一下帽子类目的趋势"
+  - role: user
+    content: "帮我搜一批帽子，先研究研究"
+
+grading:
+  automated:
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: trend
+    - check: command_called
+      command: search
+    - check: snapshot_created
+  llm_judge:
+    task_type: output_presentation
+    description: "三步研究流程完整执行；商机、趋势、搜索结果均有实质内容；快照保存供后续铺货使用"
+
+state_changes: []

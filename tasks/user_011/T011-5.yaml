@@ -1,0 +1,31 @@
+id: T011-5
+user_id: user_011
+category: S4-店铺经营
+difficulty: medium
+description: "铺货后日报变化验证：确认新铺商品（listing_counts已增至60）是否有出单"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_011_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_011_DY: 60
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，看看新铺的商品有没有出单了"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: daily_reflects_listings
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报反映当前60个在架商品；对新铺商品的出单情况有专项说明；格式清晰"
+
+state_changes: []

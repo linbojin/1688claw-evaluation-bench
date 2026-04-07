@@ -1,0 +1,30 @@
+id: T015-5
+user_id: user_015
+category: S4-店铺经营
+difficulty: basic
+description: "口碑维护策略：小红书高好评率的维护方法和注意事项"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_015_XHS
+      channel: xiaohongshu
+      is_authorized: true
+  listing_counts:
+    SHOP_015_XHS: 20
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "小红书好评率对我的店很重要，怎么维持高好评率？有什么注意事项？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: faq
+    description: "给出维护好评率的具体措施（售后响应/包装/买家沟通/差评处理等）；针对小红书平台特性有专项说明；不触发铺货操作"
+
+state_changes: []

@@ -1,0 +1,32 @@
+id: T016-3
+user_id: user_016
+category: S4-店铺经营
+difficulty: medium
+description: "AK恢复后继续搜索：AK重新配置后正常执行帽子搜索并保存快照"
+
+world_state:
+  ak_configured: true
+  ak_status: configured
+  shops:
+    - shop_code: SHOP_016_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_016_DY: 40
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "AK配好了，现在帮我搜一下帽子"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: snapshot_created
+    - check: markdown_outputted
+  llm_judge:
+    task_type: output_presentation
+    description: "搜索成功执行并返回结果；快照已保存；输出结果清晰展示商品列表"
+
+state_changes: []

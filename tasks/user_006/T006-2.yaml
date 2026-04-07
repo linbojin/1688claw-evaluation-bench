@@ -1,0 +1,39 @@
+id: T006-2
+user_id: user_006
+category: S5-异常恢复
+difficulty: complex
+description: "补充10款新帽子并铺货进抖音店"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_006_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_006_DY: 30
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "我想补10款新品进来，帮我搜一下帽子类"
+  - role: user
+    content: "这几款不错，帮我铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_006_DY
+      min_increase: 5
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate the replenishment flow for an active store: does the agent search for hat products with variety, present results clearly for user selection, then execute publish efficiently targeting approximately 10 new items as requested?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_006_DY
+    delta: 10

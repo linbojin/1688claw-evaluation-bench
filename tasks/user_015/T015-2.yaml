@@ -1,0 +1,30 @@
+id: T015-2
+user_id: user_015
+category: S4-店铺经营
+difficulty: basic
+description: "小红书图片合规：询问小红书商品主图要求和白底图规则"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_015_XHS
+      channel: xiaohongshu
+      is_authorized: true
+  listing_counts:
+    SHOP_015_XHS: 20
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "小红书对商品主图有什么要求？白底图规则是什么？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: search
+  llm_judge:
+    task_type: faq
+    description: "准确说明小红书主图尺寸、白底图要求、禁止内容等合规规则；内容准确，不触发搜索命令"
+
+state_changes: []

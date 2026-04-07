@@ -1,0 +1,36 @@
+id: T011-2
+user_id: user_011
+category: S4-店铺经营
+difficulty: complex
+description: "替换滞销品：搜索新品并铺货，覆盖原有滞销商品"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_011_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_011_DY: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜10款新品来替换滞销的那些"
+  - role: user
+    content: "帮我铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_011_DY
+      min_increase: 5
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "搜索结果合理；干跑确认后正式铺货；目标店铺无歧义时不额外询问用户确认"
+
+state_changes: []

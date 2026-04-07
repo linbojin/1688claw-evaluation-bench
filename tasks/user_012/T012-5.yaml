@@ -1,0 +1,40 @@
+id: T012-5
+user_id: user_012
+category: S4-店铺经营
+difficulty: complex
+description: "综合经营诊断：日报+趋势分析后给出完整经营建议"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_012_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_012_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_012_DY: 50
+    SHOP_012_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "给我出个日报"
+  - role: user
+    content: "帮我看看大码女装的市场趋势"
+  - role: user
+    content: "根据日报和趋势分析，你觉得我接下来应该怎么做？"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: command_called
+      command: trend
+    - check: markdown_outputted
+  llm_judge:
+    task_type: multi_step
+    description: "第三轮综合建议明确引用日报数据与趋势结论；建议具体可执行（选品方向、铺货节奏、平台侧重等）；整体逻辑连贯"
+
+state_changes: []

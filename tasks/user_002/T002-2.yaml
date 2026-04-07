@@ -1,0 +1,42 @@
+id: T002-2
+user_id: user_002
+category: S5-异常恢复
+difficulty: complex
+description: "商机热榜发现帽子机会 → 搜索 → 铺货完整链路"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_002_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_002_DY: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看最近有什么商机"
+  - role: user
+    content: "热榜上的帽子品类不错，帮我搜一批帽子"
+  - role: user
+    content: "帮我铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_002_DY
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate the opportunities-to-publish chain: does the agent correctly surface hot categories, connect the opportunity insight to the search query, and complete the publish flow cleanly?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_002_DY
+    delta: 3

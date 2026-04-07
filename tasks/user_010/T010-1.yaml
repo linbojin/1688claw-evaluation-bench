@@ -1,0 +1,38 @@
+id: T010-1
+user_id: user_010
+category: S5-异常恢复
+difficulty: medium
+description: "三店综合日报：对比抖音、拼多多、淘宝三平台出单表现"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_010_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_010_PDD
+      platform: pinduoduo
+      is_authorized: 1
+    - shop_code: SHOP_010_TB
+      platform: taobao
+      is_authorized: 1
+  listing_counts:
+    SHOP_010_DY: 25
+    SHOP_010_PDD: 25
+    SHOP_010_TB: 25
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，我有三个店铺，重点看哪个平台出单最好"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "Evaluate the three-platform comparative daily report: does the agent aggregate data across all three shops, present a clear ranking of platform performance, and provide meaningful context about why one platform may be outperforming the others (combined 15 orders/day total)?"
+
+state_changes: []

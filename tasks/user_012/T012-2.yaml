@@ -1,0 +1,40 @@
+id: T012-2
+user_id: user_012
+category: S4-店铺经营
+difficulty: complex
+description: "为强势平台加码：抖音出单更多，搜索新品后铺入抖音店"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_012_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_012_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_012_DY: 50
+    SHOP_012_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "抖音出单更多，帮我给抖音再搜10款新品"
+  - role: user
+    content: "好，铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_012_DY
+      min_increase: 5
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "搜索结果与抖音品类匹配；目标店铺为抖音（用户已明确），无需再次确认；干跑后正式铺货"
+
+state_changes: []

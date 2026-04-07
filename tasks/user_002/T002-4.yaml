@@ -1,0 +1,30 @@
+id: T002-4
+user_id: user_002
+category: S5-异常恢复
+difficulty: basic
+description: "铺货后为0出单新店生成日报，查看上架情况"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_002_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_002_DY: 10
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，看看我的新店情况"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "Evaluate the daily report for a new store with 0 orders: does the agent accurately report listing count, acknowledge zero sales without alarming the user, and offer constructive next steps?"
+
+state_changes: []

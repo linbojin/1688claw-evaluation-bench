@@ -1,0 +1,33 @@
+id: T006-3
+user_id: user_006
+category: S5-异常恢复
+difficulty: medium
+description: "帽子类目整体趋势洞察，重点了解价格区间分布"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_006_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_006_DY: 30
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看帽子这个类目的整体趋势"
+  - role: user
+    content: "价格区间主要集中在哪里？"
+
+grading:
+  automated:
+    - check: command_called
+      command: trend
+    - check: markdown_outputted
+    - check: no_raw_json
+  llm_judge:
+    task_type: output_presentation
+    description: "Evaluate hat category trend analysis quality: does the agent present trend data with clear narrative (growth direction, seasonal factors, competition level), and does the price distribution follow-up answer clearly identify key price brackets with actionable insights?"
+
+state_changes: []

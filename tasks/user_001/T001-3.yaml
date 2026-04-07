@@ -1,0 +1,28 @@
+id: T001-3
+user_id: user_001
+category: S5-异常恢复
+difficulty: medium
+description: "AK配置完成后首次选品搜索爆款帽子并保存快照"
+
+world_state:
+  ak_configured: true
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "现在帮我搜一些爆款帽子吧"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: snapshot_created
+    - check: markdown_outputted
+    - check: no_raw_json
+  llm_judge:
+    task_type: product_selection
+    description: "Evaluate the quality of product selection presentation: are results well-organized, are key product attributes highlighted, and does the agent explain selection rationale without dumping raw data?"
+
+state_changes: []

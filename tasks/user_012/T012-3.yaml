@@ -1,0 +1,34 @@
+id: T012-3
+user_id: user_012
+category: S4-店铺经营
+difficulty: basic
+description: "售后问题处理：询问买家申请仅退款的应对规则"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_012_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_012_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_012_DY: 50
+    SHOP_012_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "最近有买家申请仅退款，我应该怎么应对？有什么规则？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: search
+  llm_judge:
+    task_type: faq
+    description: "给出仅退款的平台规则说明和商家应对策略（举证、申诉、时间节点等），内容准确，不触发搜索命令"
+
+state_changes: []

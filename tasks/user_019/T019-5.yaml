@@ -1,0 +1,31 @@
+id: T019-5
+user_id: user_019
+category: S4-店铺经营
+difficulty: medium
+description: "新一轮选品：前批货铺完后重新搜索帽子补充库存"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_019_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_019_DY: 40
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "之前那批货铺完了，帮我重新搜一批帽子来补充"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: snapshot_created
+    - check: markdown_outputted
+  llm_judge:
+    task_type: product_selection
+    description: "搜索帽子并生成新快照；输出结果展示商品列表及关键信息；可适当给出选品建议"
+
+state_changes: []

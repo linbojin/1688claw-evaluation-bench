@@ -1,0 +1,38 @@
+id: T005-5
+user_id: user_005
+category: S5-异常恢复
+difficulty: complex
+description: "授权过期期间综合诊断：日报+商机+搜索备货全流程"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_005_DY
+      platform: douyin
+      is_authorized: 0
+  listing_counts:
+    SHOP_005_DY: 12
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "给我出个全面的日报"
+  - role: user
+    content: "帮我看看商机热榜"
+  - role: user
+    content: "根据日报和商机，帮我搜一批新品备用"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: search
+    - check: snapshot_created
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate the comprehensive diagnosis flow during auth expiry: does the agent complete all three information-gathering steps coherently, synthesize daily report and opportunity data into a useful search strategy, and save results as snapshot for future use after auth renewal?"
+
+state_changes: []

@@ -1,0 +1,43 @@
+id: T009-4
+user_id: user_009
+category: S5-异常恢复
+difficulty: complex
+description: "拓品边界：看厨房趋势 → 搜索 → 试水铺几款到小红书"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_009_XHS
+      platform: xiaohongshu
+      is_authorized: 1
+  listing_counts:
+    SHOP_009_XHS: 25
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "我想试试厨房类目，先看看市场情况"
+  - role: user
+    content: "帮我搜一批厨房小商品"
+  - role: user
+    content: "铺几款试试水"
+
+grading:
+  automated:
+    - check: command_called
+      command: trend
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_009_XHS
+      min_increase: 1
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate cautious category expansion: does the agent present kitchen market trend data that helps the user make an informed entry decision, execute a relevant product search, and then publish a conservative test batch without requesting redundant confirmation?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_009_XHS
+    delta: 5

@@ -1,0 +1,31 @@
+id: T001-2
+user_id: user_001
+category: S5-异常恢复
+difficulty: medium
+description: "AK未配置时尝试搜索，系统引导用户配置AK并完成配置"
+
+world_state:
+  ak_configured: false
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我在1688上找一些卖得好的帽子"
+  - role: user
+    content: "我的AK是 TEST_AK_001_BENCHMARK_KEY"
+
+grading:
+  automated:
+    - check: ak_guidance
+    - check: command_called
+      command: configure
+    - check: ak_configured
+  llm_judge:
+    task_type: error_recovery
+    description: "Evaluate how well the agent handles missing AK: does it detect the issue, provide clear AK guidance on turn 1, then successfully configure on turn 2 without unnecessary extra steps?"
+
+state_changes:
+  - type: ak_configured
+    user_id: user_001

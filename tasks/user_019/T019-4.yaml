@@ -1,0 +1,33 @@
+id: T019-4
+user_id: user_019
+category: S4-店铺经营
+difficulty: medium
+description: "铺货后日报验证：listing_counts已增至40，验证日报是否正确反映在架数量"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_019_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_019_DY: 40
+  pre_seeded_snapshots:
+    - data_id: "20240101_100000_019"
+      item_count: 60
+
+turns:
+  - role: user
+    content: "帮我出个日报，看看上架情况"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: daily_reflects_listings
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报正确反映40个在架商品的状态；对上架情况有专项说明；格式清晰"
+
+state_changes: []

@@ -1,0 +1,28 @@
+id: T014-5
+user_id: user_014
+category: S4-店铺经营
+difficulty: basic
+description: "旺季售后管理：旺季高出单量下退货率上升的处理建议"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_014_PDD
+      channel: pinduoduo
+      is_authorized: true
+  listing_counts:
+    SHOP_014_PDD: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "旺季出单量大，最近退货率也比较高，有什么处理建议？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+  llm_judge:
+    task_type: faq
+    description: "给出退货率高的可能原因分析及具体降低退货率的措施（尺码表完善、主图优化、发货速度等），建议实用且结构清晰"
+
+state_changes: []

@@ -1,0 +1,40 @@
+id: T020-5
+user_id: user_020
+category: S4-店铺经营
+difficulty: complex
+description: "全恢复后双店铺货：两店均授权正常，搜索一批货分别铺入两个店"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_020_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_020_PDD
+      channel: pinduoduo
+      is_authorized: true
+  listing_counts:
+    SHOP_020_DY: 20
+    SHOP_020_PDD: 20
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "两个店都正常了，帮我搜一批货，分别铺到两个店"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_020_DY
+      min_increase: 1
+    - check: listings_increased
+      shop_code: SHOP_020_PDD
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "搜索完成后分别向DY和PDD两个店执行铺货；每个店均经过干跑流程；两店均有商品增量"
+
+state_changes: []

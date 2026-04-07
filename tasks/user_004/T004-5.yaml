@@ -1,0 +1,34 @@
+id: T004-5
+user_id: user_004
+category: S5-异常恢复
+difficulty: basic
+description: "双11节日礼盒选品策略咨询"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_004_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_004_XHS
+      platform: xiaohongshu
+      is_authorized: 1
+  listing_counts:
+    SHOP_004_DY: 5
+    SHOP_004_XHS: 5
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "双11快到了，我想主打节日礼盒，应该怎么选品？有什么注意事项？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: faq
+    description: "Evaluate the Double 11 gift set strategy advice: does the agent provide actionable guidance on gift-oriented product selection criteria, pricing strategy, packaging considerations, and platform-specific promotion tips for both Douyin and Xiaohongshu?"
+
+state_changes: []

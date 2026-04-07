@@ -1,0 +1,32 @@
+id: T014-3
+user_id: user_014
+category: S4-店铺经营
+difficulty: medium
+description: "趋势时机判断：查看大码女装市场趋势并评估当前定价是否合理"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_014_PDD
+      channel: pinduoduo
+      is_authorized: true
+  listing_counts:
+    SHOP_014_PDD: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看大码女装现在的市场趋势，还在上行期吗？"
+  - role: user
+    content: "价格方面我现在定位对吗？"
+
+grading:
+  automated:
+    - check: command_called
+      command: trend
+    - check: markdown_outputted
+  llm_judge:
+    task_type: output_presentation
+    description: "趋势分析有明确的阶段判断（上行/平台/下行）；第二轮结合趋势数据对定价给出具体反馈，逻辑清晰"
+
+state_changes: []

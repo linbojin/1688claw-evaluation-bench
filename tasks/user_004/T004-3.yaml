@@ -1,0 +1,50 @@
+id: T004-3
+user_id: user_004
+category: S5-异常恢复
+difficulty: complex
+description: "双平台分别铺货：帽子铺抖音，家居铺小红书"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_004_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_004_XHS
+      platform: xiaohongshu
+      is_authorized: 1
+  listing_counts:
+    SHOP_004_DY: 5
+    SHOP_004_XHS: 5
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批帽子"
+  - role: user
+    content: "帮我铺到抖音"
+  - role: user
+    content: "再铺一批家居到小红书"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_004_DY
+      min_increase: 1
+    - check: listings_increased
+      shop_code: SHOP_004_XHS
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate dual-platform sequential publishing: does the agent correctly route hats to Douyin and then perform a new search for home goods to publish to Xiaohongshu, maintaining context across turns without mixing up the two operations?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_004_DY
+    delta: 3
+  - type: listings_increased
+    shop_code: SHOP_004_XHS
+    delta: 3

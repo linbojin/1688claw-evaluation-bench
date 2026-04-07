@@ -1,0 +1,45 @@
+id: T004-4
+user_id: user_004
+category: S5-异常恢复
+difficulty: complex
+description: "商机+趋势分析后搜家居并铺到小红书的全链路决策"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_004_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_004_XHS
+      platform: xiaohongshu
+      is_authorized: 1
+  listing_counts:
+    SHOP_004_DY: 5
+    SHOP_004_XHS: 5
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "看看最新商机"
+  - role: user
+    content: "帮我分析一下家居趋势"
+  - role: user
+    content: "搜一批家居，铺到小红书"
+
+grading:
+  automated:
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: trend
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate the full intelligence-driven decision chain: does the agent coherently connect opportunity data → trend analysis → product search → publish to Xiaohongshu, with each step informing the next in a logical progression?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_004_XHS
+    delta: 3

@@ -1,0 +1,38 @@
+id: T017-2
+user_id: user_017
+category: S4-店铺经营
+difficulty: medium
+description: "publish 511处理：搜索成功但铺货因授权过期返回511，给出续授权指引"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_017_DY
+      channel: douyin
+      is_authorized: false
+    - shop_code: SHOP_017_PDD
+      channel: pinduoduo
+      is_authorized: false
+  listing_counts:
+    SHOP_017_DY: 0
+    SHOP_017_PDD: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批帽子"
+  - role: user
+    content: "帮我铺到我的抖音店"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: command_called
+      command: publish
+    - check: auth_renewal_guidance
+  llm_judge:
+    task_type: error_recovery
+    description: "搜索正常完成；铺货触发511错误后正确识别为授权过期；给出明确的重新授权指引；不无限重试"
+
+state_changes: []

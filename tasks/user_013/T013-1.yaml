@@ -1,0 +1,42 @@
+id: T013-1
+user_id: user_013
+category: S4-店铺经营
+difficulty: medium
+description: "诊断滞销原因：出日报后针对无出单类目查看市场趋势"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_013_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_013_PDD
+      channel: pinduoduo
+      is_authorized: true
+    - shop_code: SHOP_013_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_013_DY: 50
+    SHOP_013_PDD: 50
+    SHOP_013_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报"
+  - role: user
+    content: "日报里有些类目一直没出单，帮我看看这个类目的市场趋势"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: command_called
+      command: trend
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报覆盖三店数据；趋势查询针对日报中提及的滞销类目；输出有诊断性结论"
+
+state_changes: []

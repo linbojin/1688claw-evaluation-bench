@@ -1,0 +1,32 @@
+id: T006-5
+user_id: user_006
+category: S5-异常恢复
+difficulty: medium
+description: "查看日报后咨询滞销品处理策略：换品还是调价"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_006_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_006_DY: 30
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报"
+  - role: user
+    content: "有一些商品一直没出单，我应该怎么处理？换品还是调价？"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: faq
+    description: "Evaluate the slow-moving inventory advice: after reviewing the daily report, does the agent give a nuanced answer on when to reprice vs replace products, with specific criteria for each decision and actionable next steps?"
+
+state_changes: []

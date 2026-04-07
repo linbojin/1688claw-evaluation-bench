@@ -1,0 +1,35 @@
+id: T016-2
+user_id: user_016
+category: S4-店铺经营
+difficulty: medium
+description: "重新配置AK：用户提供新AK后调用configure命令完成配置"
+
+world_state:
+  ak_configured: false
+  ak_status: expired
+  shops:
+    - shop_code: SHOP_016_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_016_DY: 40
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "我知道了，我重新获取了AK，是 NEW_AK_016_BENCHMARK"
+
+grading:
+  automated:
+    - check: command_called
+      command: configure
+    - check: ak_configured
+  llm_judge:
+    task_type: output_presentation
+    description: "调用configure命令并正确传入用户提供的AK值；配置完成后给出清晰的成功确认信息"
+
+state_changes:
+  - field: ak_configured
+    value: true
+  - field: ak_status
+    value: configured

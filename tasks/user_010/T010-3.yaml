@@ -1,0 +1,38 @@
+id: T010-3
+user_id: user_010
+category: S5-异常恢复
+difficulty: basic
+description: "三平台渠道差异化策略咨询：同款商品是否应分别铺或选择性铺"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_010_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_010_PDD
+      platform: pinduoduo
+      is_authorized: 1
+    - shop_code: SHOP_010_TB
+      platform: taobao
+      is_authorized: 1
+  listing_counts:
+    SHOP_010_DY: 25
+    SHOP_010_PDD: 25
+    SHOP_010_TB: 25
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "三个平台的用户群不一样，同款商品应该选不同平台还是都铺？有什么建议？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: search
+  llm_judge:
+    task_type: faq
+    description: "Evaluate the multi-platform strategy FAQ: does the agent give nuanced advice on when to list across all three platforms vs selectively (considering price sensitivity, content format, user demographics of Douyin/PDD/Taobao), with concrete product-type examples?"
+
+state_changes: []

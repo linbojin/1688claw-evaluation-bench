@@ -1,0 +1,32 @@
+id: T011-1
+user_id: user_011
+category: S4-店铺经营
+difficulty: medium
+description: "精细化日报分析：生成日报并分析出单分布，对滞销品给出处置建议"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_011_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_011_DY: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，重点看出单分布"
+  - role: user
+    content: "出单最差的那些品，我应该怎么处理？"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "日报格式清晰，出单分布有分析；第二轮针对滞销品给出具体可操作建议（下架/换品/调价等）"
+
+state_changes: []

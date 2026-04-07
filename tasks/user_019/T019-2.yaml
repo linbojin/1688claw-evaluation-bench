@@ -1,0 +1,40 @@
+id: T019-2
+user_id: user_019
+category: S4-店铺经营
+difficulty: complex
+description: "分批铺货：用户明确指定铺P021到P040共20个商品"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_019_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_019_DY: 20
+  pre_seeded_snapshots:
+    - data_id: "20240101_100000_019"
+      item_count: 60
+
+turns:
+  - role: user
+    content: "刚才铺了20个，剩下的40个怎么铺？"
+  - role: user
+    content: "好的，帮我指定铺P021到P040这20个"
+
+grading:
+  automated:
+    - check: dry_run_before_publish
+    - check: command_called
+      command: publish
+    - check: param_present
+      command: publish
+      param: --item-ids
+    - check: listings_increased
+      shop_code: SHOP_019_DY
+      min_increase: 5
+  llm_judge:
+    task_type: multi_step
+    description: "第一轮解释分批铺货方法；第二轮使用--item-ids指定P021-P040；干跑后执行；数量控制在20个"
+
+state_changes: []

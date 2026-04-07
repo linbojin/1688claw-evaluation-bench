@@ -1,0 +1,28 @@
+id: T001-1
+user_id: user_001
+category: S5-异常恢复
+difficulty: basic
+description: "完全新手首次探索，了解系统能力介绍"
+
+world_state:
+  ak_configured: false
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "你能帮我做什么？我是第一次用"
+
+grading:
+  automated:
+    - check: command_not_called
+      command: search
+    - check: command_not_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: output_presentation
+    description: "Evaluate quality of capability introduction for a first-time user: is it clear, structured, welcoming, and does it cover the main features without overwhelming the user?"
+
+state_changes: []

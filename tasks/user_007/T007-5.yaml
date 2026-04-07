@@ -1,0 +1,44 @@
+id: T007-5
+user_id: user_007
+category: S5-异常恢复
+difficulty: complex
+description: "商机驱动全链路：发现家居机会 → 搜索 → 判断合适平台并铺货"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_007_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_007_PDD
+      platform: pinduoduo
+      is_authorized: 1
+  listing_counts:
+    SHOP_007_DY: 15
+    SHOP_007_PDD: 15
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看商机热榜，发现新机会"
+  - role: user
+    content: "热榜上家居不错，帮我搜一批"
+  - role: user
+    content: "家居更适合哪个平台？帮我铺到合适的平台"
+
+grading:
+  automated:
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: markdown_outputted
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate opportunity-driven platform selection: does the agent make a reasoned recommendation on whether home goods fit better on Douyin or Pinduoduo (considering content suitability and user demographics), then execute publish to the recommended platform?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_007_DY
+    delta: 3

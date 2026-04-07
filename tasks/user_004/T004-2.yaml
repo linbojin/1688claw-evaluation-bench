@@ -1,0 +1,34 @@
+id: T004-2
+user_id: user_004
+category: S5-异常恢复
+difficulty: basic
+description: "咨询帽子在抖音vs小红书的平台适配差异"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_004_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_004_XHS
+      platform: xiaohongshu
+      is_authorized: 1
+  listing_counts:
+    SHOP_004_DY: 5
+    SHOP_004_XHS: 5
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帽子这个产品，更适合放在抖音还是小红书卖？各有什么差异？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: faq
+    description: "Evaluate the platform suitability analysis for hats: does the agent accurately compare Douyin (short video, impulse purchase) vs Xiaohongshu (content-driven, lifestyle) for hat sales, with specific content strategy suggestions for each?"
+
+state_changes: []

@@ -1,0 +1,36 @@
+id: T017-5
+user_id: user_017
+category: S4-店铺经营
+difficulty: basic
+description: "搜索不受授权影响：店铺授权全部过期时搜索仍可正常进行并保存快照"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_017_DY
+      channel: douyin
+      is_authorized: false
+    - shop_code: SHOP_017_PDD
+      channel: pinduoduo
+      is_authorized: false
+  listing_counts:
+    SHOP_017_DY: 0
+    SHOP_017_PDD: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批帽子，先备着"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: snapshot_created
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: output_presentation
+    description: "搜索正常执行不受授权影响；保存快照供后续使用；不主动尝试铺货；如有必要可提示授权过期情况"
+
+state_changes: []

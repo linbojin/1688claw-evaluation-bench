@@ -1,0 +1,40 @@
+id: T019-1
+user_id: user_019
+category: S4-店铺经营
+difficulty: medium
+description: "全量铺货触发截断：使用预置快照铺货，60个商品因截断只提交20个"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_019_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_019_DY: 20
+  pre_seeded_snapshots:
+    - data_id: "20240101_100000_019"
+      item_count: 60
+
+turns:
+  - role: user
+    content: "帮我把之前搜的那批货(20240101_100000_019)全部铺到我的店里"
+
+grading:
+  automated:
+    - check: dry_run_before_publish
+    - check: command_called
+      command: publish
+    - check: param_present
+      command: publish
+      param: --data-id
+      value: "20240101_100000_019"
+    - check: listings_increased
+      shop_code: SHOP_019_DY
+      min_increase: 5
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: output_presentation
+    description: "正确使用--data-id参数；干跑后执行铺货；在输出中说明截断情况（原始60个，实际提交20个）；不因截断而报错"
+
+state_changes: []

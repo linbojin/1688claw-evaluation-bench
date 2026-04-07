@@ -1,0 +1,35 @@
+id: T003-5
+user_id: user_003
+category: S5-异常恢复
+difficulty: medium
+description: "从帽子切换到家居类目：先看市场趋势再搜索产品"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_003_PDD
+      platform: pinduoduo
+      is_authorized: 1
+  listing_counts:
+    SHOP_003_PDD: 8
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "我现在卖帽子，想试试家居类目，帮我先看看家居的市场情况"
+  - role: user
+    content: "帮我搜一批家居产品"
+
+grading:
+  automated:
+    - check: command_called
+      command: trend
+    - check: command_called
+      command: search
+    - check: snapshot_created
+    - check: markdown_outputted
+  llm_judge:
+    task_type: product_selection
+    description: "Evaluate category expansion decision support: does the agent provide useful home goods market trend analysis, then execute a relevant search that reflects the trend insights, and present results in a way that helps the user decide?"
+
+state_changes: []

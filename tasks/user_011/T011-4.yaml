@@ -1,0 +1,30 @@
+id: T011-4
+user_id: user_011
+category: S4-店铺经营
+difficulty: basic
+description: "价格策略咨询：询问1688进价加价倍率的一般规律"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_011_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_011_DY: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "我的商品定价一般是1688进价的几倍比较合适？有没有规律可循？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: faq
+    description: "给出实用的加价倍率参考区间（如1.5x-3x），结合类目/平台差异说明，回答结构清晰，不触发铺货操作"
+
+state_changes: []

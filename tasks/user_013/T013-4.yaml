@@ -1,0 +1,47 @@
+id: T013-4
+user_id: user_013
+category: S4-店铺经营
+difficulty: complex
+description: "新类目快速验证：查看宠物类目趋势，搜索5款小批量铺入淘宝测试"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_013_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_013_PDD
+      channel: pinduoduo
+      is_authorized: true
+    - shop_code: SHOP_013_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_013_DY: 50
+    SHOP_013_PDD: 50
+    SHOP_013_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看宠物类目的趋势"
+  - role: user
+    content: "值得试试，帮我搜5款宠物产品，小批量测试"
+  - role: user
+    content: "铺到淘宝"
+
+grading:
+  automated:
+    - check: command_called
+      command: trend
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_013_TB
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "趋势分析针对宠物类目；搜索结果数量控制在小批量范围；铺入淘宝并完成干跑流程"
+
+state_changes: []

@@ -1,0 +1,28 @@
+id: T001-4
+user_id: user_001
+category: S5-异常恢复
+difficulty: basic
+description: "尝试铺货时发现无绑定店铺，系统提供店铺绑定引导"
+
+world_state:
+  ak_configured: true
+  shops: []
+  listing_counts: {}
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我把搜到的帽子铺到我的店里"
+
+grading:
+  automated:
+    - check: command_called
+      command: shops
+    - check: store_guidance
+    - check: command_not_called
+      command: publish
+  llm_judge:
+    task_type: error_recovery
+    description: "Evaluate how the agent handles zero bound shops: does it check shops first, provide actionable store binding guidance, and correctly refrain from attempting to publish?"
+
+state_changes: []

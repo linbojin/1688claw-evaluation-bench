@@ -1,0 +1,34 @@
+id: T017-4
+user_id: user_017
+category: S4-店铺经营
+difficulty: basic
+description: "授权过期但日报仍可读：授权过期状态下调取历史订单数据生成日报"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_017_DY
+      channel: douyin
+      is_authorized: false
+    - shop_code: SHOP_017_PDD
+      channel: pinduoduo
+      is_authorized: false
+  listing_counts:
+    SHOP_017_DY: 0
+    SHOP_017_PDD: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "给我出个日报，看看历史数据"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "shop_daily在授权过期时仍能读取历史订单数据并生成日报；报告内容合理；如有限制应予说明"
+
+state_changes: []

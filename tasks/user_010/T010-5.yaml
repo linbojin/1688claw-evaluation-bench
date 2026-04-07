@@ -1,0 +1,49 @@
+id: T010-5
+user_id: user_010
+category: S5-异常恢复
+difficulty: complex
+description: "商机驱动全链路决策：商机+趋势+搜索+铺到最合适平台"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_010_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_010_PDD
+      platform: pinduoduo
+      is_authorized: 1
+    - shop_code: SHOP_010_TB
+      platform: taobao
+      is_authorized: 1
+  listing_counts:
+    SHOP_010_DY: 25
+    SHOP_010_PDD: 25
+    SHOP_010_TB: 25
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看最新商机"
+  - role: user
+    content: "帮我分析一下热门类目趋势"
+  - role: user
+    content: "帮我搜一批，铺到最合适的平台"
+
+grading:
+  automated:
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: trend
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate the full intelligence-to-action pipeline with three platforms: does the agent synthesize opportunity data and trend analysis to select both the right product category and the optimal platform (out of three), then execute the search and publish flow with a clear rationale for the platform choice?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_010_DY
+    delta: 5

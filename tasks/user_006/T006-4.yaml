@@ -1,0 +1,31 @@
+id: T006-4
+user_id: user_006
+category: S5-异常恢复
+difficulty: medium
+description: "铺货后日报验证上架商品数从30更新到40"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_006_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_006_DY: 40
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，看看上架商品数有没有更新"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: daily_reflects_listings
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "Evaluate listing count verification in daily report: does the agent correctly report 40 listings (reflecting the post-publish state), and does the report format make it easy to confirm the listing count has been updated from 30 to 40?"
+
+state_changes: []

@@ -1,0 +1,30 @@
+id: T005-3
+user_id: user_005
+category: S5-异常恢复
+difficulty: medium
+description: "授权过期状态下仍可读取历史出单日报（3单/天）"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_005_DY
+      platform: douyin
+      is_authorized: 0
+  listing_counts:
+    SHOP_005_DY: 12
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，看看出单情况"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "Evaluate the daily report during auth expiry: does the agent correctly show historical order data (approximately 3/day) even when publish is blocked, and does it mention the auth expiry situation without being alarmist while still being clear?"
+
+state_changes: []

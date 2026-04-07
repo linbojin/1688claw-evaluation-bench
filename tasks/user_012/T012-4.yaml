@@ -1,0 +1,38 @@
+id: T012-4
+user_id: user_012
+category: S4-店铺经营
+difficulty: complex
+description: "商机双平台决策：查看商机热榜，分析家居品类平台适配性后搜索铺货"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_012_DY
+      channel: douyin
+      is_authorized: true
+    - shop_code: SHOP_012_TB
+      channel: taobao
+      is_authorized: true
+  listing_counts:
+    SHOP_012_DY: 50
+    SHOP_012_TB: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "看看商机热榜"
+  - role: user
+    content: "热榜上家居不错，这个品类更适合抖音还是淘宝？帮我搜一下再铺"
+
+grading:
+  automated:
+    - check: command_called
+      command: opportunities
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+  llm_judge:
+    task_type: multi_step
+    description: "商机热榜有实质解读；对家居品类的平台适配性给出有依据的判断；搜索并完成干跑铺货流程"
+
+state_changes: []

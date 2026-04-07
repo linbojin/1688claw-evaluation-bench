@@ -1,0 +1,28 @@
+id: T015-4
+user_id: user_015
+category: S4-店铺经营
+difficulty: basic
+description: "高端定价策略：高客单价商品的加价倍率设置建议"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_015_XHS
+      channel: xiaohongshu
+      is_authorized: true
+  listing_counts:
+    SHOP_015_XHS: 20
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "我的商品客单价比较高，定价时加价倍率应该怎么设置？"
+
+grading:
+  automated:
+    - check: markdown_outputted
+  llm_judge:
+    task_type: faq
+    description: "针对高客单价/精品定位给出合理的加价倍率建议，区别于大众品类；说明小红书平台用户对价格的接受度特征"
+
+state_changes: []

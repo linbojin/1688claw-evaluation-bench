@@ -1,0 +1,39 @@
+id: T011-3
+user_id: user_011
+category: S4-店铺经营
+difficulty: complex
+description: "趋势捕捉+补品：查看秋冬市场趋势，搜索帽子新品后铺货"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_011_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_011_DY: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看秋冬服装的市场趋势"
+  - role: user
+    content: "趋势不错，帮我搜一批秋冬帽子"
+  - role: user
+    content: "好，帮我铺进去"
+
+grading:
+  automated:
+    - check: command_called
+      command: trend
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_011_DY
+      min_increase: 1
+  llm_judge:
+    task_type: multi_step
+    description: "趋势分析有实质内容；搜索关键词与趋势结论吻合；三步流程完整执行，干跑后正式铺货"
+
+state_changes: []

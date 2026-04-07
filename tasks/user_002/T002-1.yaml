@@ -1,0 +1,43 @@
+id: T002-1
+user_id: user_002
+category: S5-异常恢复
+difficulty: complex
+description: "首次完整选品铺货链路：搜索露营椅（抖音渠道）→ 用户确认 → 铺货"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_002_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_002_DY: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我在1688找一些露营椅，我要铺到抖音，100元以内"
+  - role: user
+    content: "这几款不错，帮我铺进去"
+
+grading:
+  automated:
+    - check: param_present
+      command: search
+      param: --channel
+      value: douyin
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_002_DY
+      min_increase: 3
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate the complete search-to-publish flow: correct channel parameter usage, sensible product filtering under 100 RMB, dry-run presented before publish, and clean execution without unnecessary confirmations."
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_002_DY
+    delta: 3

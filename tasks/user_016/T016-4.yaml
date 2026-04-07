@@ -1,0 +1,37 @@
+id: T016-4
+user_id: user_016
+category: S4-店铺经营
+difficulty: complex
+description: "正常铺货：AK配置正常后搜索户外产品并铺入店铺"
+
+world_state:
+  ak_configured: true
+  ak_status: configured
+  shops:
+    - shop_code: SHOP_016_DY
+      channel: douyin
+      is_authorized: true
+  listing_counts:
+    SHOP_016_DY: 40
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批户外产品"
+  - role: user
+    content: "帮我铺到我的店里"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_016_DY
+      min_increase: 1
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "搜索户外产品成功；目标店铺唯一不额外确认；干跑后正式铺货流程完整"
+
+state_changes: []

@@ -1,0 +1,43 @@
+id: T007-2
+user_id: user_007
+category: S5-异常恢复
+difficulty: complex
+description: "强势平台加码：搜10款户外产品铺到出单更多的抖音店"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_007_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_007_PDD
+      platform: pinduoduo
+      is_authorized: 1
+  listing_counts:
+    SHOP_007_DY: 15
+    SHOP_007_PDD: 15
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "抖音出单是拼多多的两倍多，帮我给抖音再搜10款户外产品"
+  - role: user
+    content: "好，铺到抖音"
+
+grading:
+  automated:
+    - check: command_called
+      command: search
+    - check: dry_run_before_publish
+    - check: listings_increased
+      shop_code: SHOP_007_DY
+      min_increase: 5
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: multi_step
+    description: "Evaluate data-driven doubling-down on the stronger platform: does the agent correctly focus the search on outdoor products, route the publish specifically to Douyin (not PDD), and complete without asking for extra confirmation given the explicit instruction?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_007_DY
+    delta: 10

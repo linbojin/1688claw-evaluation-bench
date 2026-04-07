@@ -1,0 +1,31 @@
+id: T008-5
+user_id: user_008
+category: S5-异常恢复
+difficulty: medium
+description: "扩品后日报验证：50个商品的新品有无出单动静"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_008_DY
+      platform: douyin
+      is_authorized: 1
+  listing_counts:
+    SHOP_008_DY: 50
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我出个日报，看看新铺的商品有没有动静"
+
+grading:
+  automated:
+    - check: command_called
+      command: shop_daily
+    - check: daily_reflects_listings
+    - check: markdown_outputted
+  llm_judge:
+    task_type: daily_report
+    description: "Evaluate post-expansion daily report: does the agent correctly reflect 50 listings in the report (up from 35), compare new vs existing product performance where possible, and provide useful observations about newly listed item traction?"
+
+state_changes: []

@@ -1,0 +1,47 @@
+id: T010-4
+user_id: user_010
+category: S5-异常恢复
+difficulty: medium
+description: "超量铺货处理：尝试铺25款到抖音，dry-run截断到20款，代理解释并继续"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_010_DY
+      platform: douyin
+      is_authorized: 1
+    - shop_code: SHOP_010_PDD
+      platform: pinduoduo
+      is_authorized: 1
+    - shop_code: SHOP_010_TB
+      platform: taobao
+      is_authorized: 1
+  listing_counts:
+    SHOP_010_DY: 25
+    SHOP_010_PDD: 25
+    SHOP_010_TB: 25
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我搜一批帽子"
+  - role: user
+    content: "帮我把这25款全部铺到抖音"
+
+grading:
+  automated:
+    - check: dry_run_before_publish
+    - check: command_called
+      command: publish
+    - check: listings_increased
+      shop_code: SHOP_010_DY
+      min_increase: 15
+    - check: no_extra_confirmation
+  llm_judge:
+    task_type: output_presentation
+    description: "Evaluate over-quota publishing handling: when dry-run reveals a 20-item cap, does the agent clearly explain the truncation to the user, present the dry-run result showing which items will and won't be published, then proceed to publish without requesting redundant confirmation?"
+
+state_changes:
+  - type: listings_increased
+    shop_code: SHOP_010_DY
+    delta: 20

@@ -1,0 +1,35 @@
+id: T017-1
+user_id: user_017
+category: S4-店铺经营
+difficulty: medium
+description: "发现全部授权过期：查询店铺状态后发现两店均授权过期，给出续授权指引"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_017_DY
+      channel: douyin
+      is_authorized: false
+    - shop_code: SHOP_017_PDD
+      channel: pinduoduo
+      is_authorized: false
+  listing_counts:
+    SHOP_017_DY: 0
+    SHOP_017_PDD: 0
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我查一下我的店铺状态"
+
+grading:
+  automated:
+    - check: command_called
+      command: shops
+    - check: auth_renewal_guidance
+    - check: markdown_outputted
+  llm_judge:
+    task_type: error_recovery
+    description: "调用shops命令查询状态；识别两店均已过期；给出具体的重新授权操作步骤；措辞清晰不慌乱"
+
+state_changes: []

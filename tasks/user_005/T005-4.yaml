@@ -1,0 +1,32 @@
+id: T005-4
+user_id: user_005
+category: S5-异常恢复
+difficulty: medium
+description: "大码女装趋势分析，结合趋势评估现有商品是否值得继续"
+
+world_state:
+  ak_configured: true
+  shops:
+    - shop_code: SHOP_005_DY
+      platform: douyin
+      is_authorized: 0
+  listing_counts:
+    SHOP_005_DY: 12
+  pre_seeded_snapshots: []
+
+turns:
+  - role: user
+    content: "帮我看看大码女装的市场趋势"
+  - role: user
+    content: "根据趋势，我现有的商品还值得继续卖吗？"
+
+grading:
+  automated:
+    - check: command_called
+      command: trend
+    - check: markdown_outputted
+  llm_judge:
+    task_type: output_presentation
+    description: "Evaluate the trend-to-decision analysis: does the agent provide meaningful large-size women's clothing trend data, then give a reasoned assessment of whether current listings are still viable, with specific criteria used for the judgment?"
+
+state_changes: []
